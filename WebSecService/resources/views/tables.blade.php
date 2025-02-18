@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Tables (1 to 10)</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin: 10px;
+        }
+        .table {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-5">Multiplication Tables (1 to 10)</h1>
+        <div class="row" id="tables-container">
+            <!-- Tables will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to generate tables -->
+    <script>
+        const tablesContainer = document.getElementById('tables-container');
+
+        // Loop through numbers 1 to 10
+        for (let j = 1; j <= 10; j++) {
+            // Create a card for each table
+            const card = document.createElement('div');
+            card.className = 'card col-sm-2';
+
+            // Create card header
+            const cardHeader = document.createElement('div');
+            cardHeader.className = 'card-header';
+            cardHeader.textContent = `Multiplication Table: ${j}`;
+            card.appendChild(cardHeader);
+
+            // Create card body
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            // Create table
+            const table = document.createElement('table');
+            table.className = 'table table-bordered';
+
+            // Loop through numbers 1 to 10 to create rows
+            for (let i = 1; i <= 10; i++) {
+                const row = document.createElement('tr');
+                const cell1 = document.createElement('td');
+                const cell2 = document.createElement('td');
+
+                cell1.textContent = `${i} * ${j}`;
+                cell2.textContent = `= ${i * j}`;
+
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                table.appendChild(row);
+            }
+
+            // Append table to card body
+            cardBody.appendChild(table);
+            card.appendChild(cardBody);
+
+            // Append card to container
+            tablesContainer.appendChild(card);
+        }
+    </script>
+</body>
+</html>
