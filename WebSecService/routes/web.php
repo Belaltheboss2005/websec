@@ -9,21 +9,33 @@ Route::post('register', [UsersController::class, 'doRegister'])->name('do_regist
 Route::get('login', [UsersController::class, 'login'])->name('login');
 Route::post('login', [UsersController::class, 'doLogin'])->name('do_login');
 Route::get('logout', [UsersController::class, 'doLogout'])->name('do_logout');
-Route::get('users', [UsersController::class, 'list'])->name('users');
-Route::get('profile/{user?}', [UsersController::class, 'profile'])->name('profile');
-Route::get('users/edit/{user?}', [UsersController::class, 'edit'])->name('users_edit');
-Route::post('users/save/{user}', [UsersController::class, 'save'])->name('users_save');
-Route::get('users/delete/{user}', [UsersController::class, 'delete'])->name('users_delete');
-Route::get('users/edit_password/{user?}', [UsersController::class, 'editPassword'])->name('edit_password');
-Route::post('users/save_password/{user}', [UsersController::class, 'savePassword'])->name('save_password');
 
+Route::middleware(['auth'])->group(function () {
 
+    // User routes
+    Route::get('users', [UsersController::class, 'list'])->name('users');
+    Route::get('profile/{user?}', [UsersController::class, 'profile'])->name('profile');
+    Route::get('users/edit/{user?}', [UsersController::class, 'edit'])->name('users_edit');
+    Route::post('users/save/{user}', [UsersController::class, 'save'])->name('users_save');
+    Route::get('users/delete/{user}', [UsersController::class, 'delete'])->name('users_delete');
+    Route::get('users/edit_password/{user?}', [UsersController::class, 'editPassword'])->name('edit_password');
+    Route::post('users/save_password/{user}', [UsersController::class, 'savePassword'])->name('save_password');
+    Route::get('/users/add', [UsersController::class, 'addUser'])->name('users_add');
+    Route::post('/users/add', [UsersController::class, 'storeUser'])->name('users_store');
 
-Route::get('products', [ProductsController::class, 'list'])->name('products_list');
-Route::get('products/edit/{product?}', [ProductsController::class, 'edit'])->name('products_edit');
-Route::post('products/save/{product?}', [ProductsController::class, 'save'])->name('products_save');
-Route::get('products/delete/{product}', [ProductsController::class, 'delete'])->name('products_delete');
+    // Product routes
 
+    Route::get('products', [ProductsController::class, 'list'])->name('products_list');
+    Route::get('products/edit/{product?}', [ProductsController::class, 'edit'])->name('products_edit');
+    Route::post('products/save/{product?}', [ProductsController::class, 'save'])->name('products_save');
+    Route::get('products/delete/{product}', [ProductsController::class, 'delete'])->name('products_delete');
+    Route::get('/products/buy/{id}', [ProductsController::class, 'buy'])->name('products_buy');
+    Route::get('/bought-products', [ProductsController::class, 'boughtProducts'])->name('bought_products');
+    Route::get('/products/insufficient-credit', function () {
+        return view('products.insufficient_credit');
+    })->name('insufficient_credit');
+
+});
 Route::get('/', function () {
     return view('welcome');
 });

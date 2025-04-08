@@ -21,6 +21,9 @@
                 <a class="nav-link" href="{{route('users')}}">Users</a>
             </li>
             @endcan
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('bought_products')}}">Bought Products List</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             @auth

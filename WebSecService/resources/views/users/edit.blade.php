@@ -17,39 +17,46 @@ $(document).ready(function(){
         <form action="{{route('users_save', $user->id)}}" method="post">
             {{ csrf_field() }}
             @foreach($errors->all() as $error)
-            <div class="alert alert-danger">
-            <strong>Error!</strong> {{$error}}
-            </div>
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> {{$error}}
+                </div>
             @endforeach
             <div class="row mb-2">
                 <div class="col-12">
-                    <label for="code" class="form-label">Name:</label>
+                    <label for="name" class="form-label">Name:</label>
                     <input type="text" class="form-control" placeholder="Name" name="name" required value="{{$user->name}}">
                 </div>
             </div>
-            @can('admin_users')
+            @if(!auth()->user()->hasRole('Customer'))
+            <div class="row mb-2">
+                <div class="col-12">
+                    <label for="credit" class="form-label">Credit:</label>
+                    <input type="number" class="form-control" placeholder="Credit" name="credit" required value="{{$user->credit}}">
+                </div>
+            </div>
+            @endif
+            @if(auth()->user()->hasPermissionTo('admin_users'))
             <div class="col-12 mb-2">
-                <label for="model" class="form-label">Roles:</label> (<a href='#' id='clean_roles'>reset</a>)
+                <label for="roles" class="form-label">Roles:</label> (<a href='#' id='clean_roles'>reset</a>)
                 <select multiple class="form-select" id='roles' name="roles[]">
                     @foreach($roles as $role)
-                    <option value='{{$role->name}}' {{$role->taken?'selected':''}}>
-                        {{$role->name}}
-                    </option>
+                        <option value='{{$role->name}}' {{$role->taken?'selected':''}}>
+                            {{$role->name}}
+                        </option>
                     @endforeach
                 </select>
             </div>
             <div class="col-12 mb-2">
-                <label for="model" class="form-label">Direct Permissions:</label> (<a href='#' id='clean_permissions'>reset</a>)
+                <label for="permissions" class="form-label">Direct Permissions:</label> (<a href='#' id='clean_permissions'>reset</a>)
                 <select multiple class="form-select" id='permissions' name="permissions[]">
-                @foreach($permissions as $permission)
-                    <option value='{{$permission->name}}' {{$permission->taken?'selected':''}}>
-                        {{$permission->display_name}}
-                    </option>
+                    @foreach($permissions as $permission)
+                        <option value='{{$permission->name}}' {{$permission->taken?'selected':''}}>
+                            {{$permission->display_name}}
+                        </option>
                     @endforeach
                 </select>
             </div>
-            @endcan
-
+            @endif
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

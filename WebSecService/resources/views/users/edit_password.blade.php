@@ -11,7 +11,7 @@
             </div>
             @endforeach
 
-            @if(!auth()->user()->hasPermissionTo('admin_users') || auth()->id()==$user->id)
+            @if(!auth()->user()->hasPermissionTo('edit_users') || auth()->id()==$user->id)
                 <div class="row mb-2">
                     <div class="col-12">
                         <label class="form-label">Old Password:</label>
@@ -26,7 +26,7 @@
                     <input type="password" class="form-control" placeholder="Password" name="password" required>
                 </div>
             </div>
-            
+
             <div class="row mb-2">
                 <div class="col-12">
                     <label class="form-label">Password Confirmtion:</label>

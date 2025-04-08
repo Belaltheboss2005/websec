@@ -11,6 +11,9 @@
                 <th>Email</th><td>{{$user->email}}</td>
             </tr>
             <tr>
+                <th>Credit</th><td>{{$user->credit}}</td>
+            </tr>
+            <tr>
                 <th>Roles</th>
                 <td>
                     @foreach($user->roles as $role)
